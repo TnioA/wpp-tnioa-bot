@@ -13,8 +13,6 @@ class Botzap:
 	def __init__(self, nome):
 		
 		print('Bot Iniciado')
-		teste = ('''Esta e a string
-E aqui vai a outra parte dela''')
 		self.driver = webdriver.Chrome(executable_path='driver/chromedriver')
 		self.driver.get('https://web.whatsapp.com')
 		time.sleep(5)
@@ -27,20 +25,22 @@ E aqui vai a outra parte dela''')
 		contato.click()
 		time.sleep(1)
 		mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
-		mensagemBox.send_keys(teste)
+		mensagemBox.send_keys('Estou ativo')
 		time.sleep(1)
 		enviar = self.driver.find_element_by_class_name('_35EW6')
 		enviar.click()
+		time.sleep(1)
 
 	def write(self, texto):
 		#print('Comando enviar mensagem')
 
 		mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
 		mensagemBox.send_keys(texto)
-		time.sleep(1)
+		time.sleep(2)
 
 		enviar = self.driver.find_element_by_class_name('_35EW6')
 		enviar.click()
+		time.sleep(1)
 
 	def monitor(self):
 		#print('Comando escutar iniciado')
@@ -49,7 +49,7 @@ E aqui vai a outra parte dela''')
 		ultimo = len(post) - 1
 		try:
 			texto = post[ultimo].find_element_by_class_name('selectable-text').text
-			if texto[:4] == 'Bot:':
+			if texto[:1] == '/':
 				return(texto)
 		except:
 			pass

@@ -32,31 +32,35 @@ bot = Botzap('Teste')
 while True:
 	retorno = bot.monitor()
 
-	if retorno == 'Bot:oibot':
+	if retorno == '/oibot':
 		print('recebido comando ola')
 		bot.write('Oi eu sou o bot do Tanio responda com Bot:comandos para receber a lista de comandos e conseguir se comunicar comigo')
 	
-	if retorno == 'Bot:filmes':
-		conteudo = getmovies()
-		c = 1
+	if retorno == '/filmes':
 		print('recebido o comando filmes')
+		conteudo = getmovies()
+		msg_movies = ''
+		c = 1
 		for cont in conteudo['filmes']:
-			bot.write('Filme {}: \n'.format(c) + 'Titulo: ' + cont['nome'] + ' Estreado em: ' + cont['data'])
+			msg_movies = msg_movies + ('Filme {}: \n'.format(c) + 'Titulo: ' + cont['nome'] + ' Estreado em: ' + cont['data'] + '\n\n')
 			c = int(c) + 1
+		bot.write(msg_movies)
 	
-	if retorno == 'Bot:futebol':
+	if retorno == '/futebol':
 		print('recebido o comando futebol')
 		bot.write('Ainda em desenvolvimento')
 	
-	if retorno == 'Bot:noticias':
+	if retorno == '/noticias':
 		print('recebido o comando noticias')
 		conteudo = getnews()
+		msg_news = ''
 		c = 1
 		for cont in conteudo['articles']:
-			bot.write('Noticia {}: '.format(c) + cont['title'])
+			msg_news = (msg_news + ('Noticia {}: \n'.format(c) + cont['title'] + '\n\n'))
 			c = int(c) + 1
+		bot.write(msg_news)
 
-	if retorno == 'Bot:comandos':
+	if retorno == '/comandos':
 		print('recebido comando lista de comandos')
-		bot.write('Comandos ==================================> \n Bot:oibot = Para me chamar \n Bot:noticias = Para receber algumas noticias \n Bot:futebol = Para receber a tabela do Brasileirao Serie A \n Bot:filmes = Para receber os filmes que estao em cartaz \n Bot:comandos = Para receber uma lista de comandos \n >>=============================>')
+		bot.write('Comandos:\n/oibot = Para me chamar\n/noticias = Para receber algumas noticias\n/futebol = Para receber a tabela do Brasileirao Serie A\n/filmes = Para receber os filmes que estao em cartaz\n/comandos = Para receber uma lista de comandos')
 pass
