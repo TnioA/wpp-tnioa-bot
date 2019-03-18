@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import json, requests
-from simpleapp import Botzap
+from app import Botzap
 import re
 
 def getnews():
@@ -25,18 +25,18 @@ contato = str('BotTnioA')
 mensagem = str('Bot:: Mensagem de teste enviada pelo bot do Tanio')
 
 
-bot = Botzap('Teste')
+bot = Botzap('+55 85 8407-3833')
 
 #bot.send(contato, mensagem)
 
 while True:
-	retorno = bot.monitor()
+	retorno = bot.message_lopp()
 
 	if retorno == '/oibot':
 		print('recebido comando ola')
-		bot.write('Oi eu sou o bot do Tanio responda com Bot:comandos para receber a lista de comandos e conseguir se comunicar comigo')
+		bot.sendMessage('Oi eu sou o bot do Tanio responda com /comandos para receber a lista de comandos e conseguir se comunicar comigo')
 	
-	if retorno == '/filmes':
+	elif retorno == '/filmes':
 		print('recebido o comando filmes')
 		conteudo = getmovies()
 		msg_movies = ''
@@ -44,13 +44,13 @@ while True:
 		for cont in conteudo['filmes']:
 			msg_movies = msg_movies + ('Filme {}: \n'.format(c) + 'Titulo: ' + cont['nome'] + ' Estreado em: ' + cont['data'] + '\n\n')
 			c = int(c) + 1
-		bot.write(msg_movies)
+		bot.sendMessage(msg_movies)
 	
-	if retorno == '/futebol':
+	elif retorno == '/futebol':
 		print('recebido o comando futebol')
-		bot.write('Ainda em desenvolvimento')
+		bot.sendMessage('Ainda em desenvolvimento')
 	
-	if retorno == '/noticias':
+	elif retorno == '/noticias':
 		print('recebido o comando noticias')
 		conteudo = getnews()
 		msg_news = ''
@@ -58,9 +58,10 @@ while True:
 		for cont in conteudo['articles']:
 			msg_news = (msg_news + ('Noticia {}: \n'.format(c) + cont['title'] + '\n\n'))
 			c = int(c) + 1
-		bot.write(msg_news)
+		bot.sendMessage(msg_news)
 
-	if retorno == '/comandos':
+	elif retorno == '/comandos':
 		print('recebido comando lista de comandos')
-		bot.write('Comandos:\n/oibot = Para me chamar\n/noticias = Para receber algumas noticias\n/futebol = Para receber a tabela do Brasileirao Serie A\n/filmes = Para receber os filmes que estao em cartaz\n/comandos = Para receber uma lista de comandos')
+		bot.sendMessage('Comandos:\n\n/oibot = Para me chamar\n/noticias = Para receber algumas noticias\n/futebol = Para receber a tabela do Brasileirao Serie A\n/filmes = Para receber os filmes que estao em cartaz\n/comandos = Para receber uma lista de comandos')
+
 pass
