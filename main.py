@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-import json, requests
+import json
+import requests
 from app import Botzap
 import re
 
@@ -20,17 +21,10 @@ def getmovies():
 	conteudo = json.loads(resp.content)
 	return(conteudo)
 
-
-contato = str('BotTnioA')
-mensagem = str('Bot:: Mensagem de teste enviada pelo bot do Tanio')
-
-
-bot = Botzap('+55 85 8407-3833')
-
-#bot.send(contato, mensagem)
+bot = Botzap('TanTanio_bot')
 
 while True:
-	retorno = bot.message_lopp()
+	retorno = bot.message_loop()
 
 	if retorno == '/oibot':
 		print('recebido comando ola')
