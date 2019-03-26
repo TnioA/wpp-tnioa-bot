@@ -5,7 +5,7 @@ from app import Botzap
 import re
 
 def getnews():
-	#API DE NOTICIAS BRASIL
+	#API DE NOTICIAS GLOBO BRASIL
 	url = 'https://newsapi.org/v2/top-headlines?sources=globo&pageSize=5&apiKey=f6fdb7cb0f2a497d92dbe719a29b197f'
 	#http = urllib3.PoolManager()
 	#resp = http.request('GET',url)
@@ -16,7 +16,7 @@ def getnews():
 
 def getmovies():
 	#API DE FILMES BRASIL
-	url = 'http://localhost:5000/api/filmes'
+	url = 'http://restmovies.herokuapp.com/api/filmes'
 	resp = requests.get(url)
 	conteudo = json.loads(resp.content)
 	return(conteudo)
@@ -26,6 +26,7 @@ bot = Botzap('TanTanio_bot')
 while True:
 	retorno = bot.message_loop()
 
+	print(retorno['text'].text)
 	if retorno == '/oibot':
 		print('recebido comando ola')
 		bot.sendMessage('Oi eu sou o bot do Tanio responda com /comandos para receber a lista de comandos e conseguir se comunicar comigo')
@@ -58,4 +59,5 @@ while True:
 		print('recebido comando lista de comandos')
 		bot.sendMessage('Comandos:\n\n/oibot = Para me chamar\n/noticias = Para receber algumas noticias\n/futebol = Para receber a tabela do Brasileirao Serie A\n/filmes = Para receber os filmes que estao em cartaz\n/comandos = Para receber uma lista de comandos')
 
-pass
+	else:
+		pass

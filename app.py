@@ -45,19 +45,26 @@ class Botzap:
 	def message_loop(self):
 
 		contactBox = self.driver.find_elements_by_class_name('_2wP_Y')
-
+		data = []
 		try:
 			if(self.driver.find_element_by_class_name('OUeyt')):
-				chatid = contactBox[0].find_element_by_class_name('_1wjpf').text
-				contactBox[0].click()
+				escolha_contato = self.driver.find_element_by_class_name('OUeyt')
+				escolha_contato.click()
+				time.sleep(2)
+				chatid = self.driver.find_element_by_class_name('_3XrHh').find_element_by_class_name('_1wjpf').text
+				
 				post = self.driver.find_elements_by_class_name('_3_7SH')
 				ultimo_post = len(post) - 1
 				try:
 					time.sleep(2)
+					hora = post[ultimo_post].find_element_by_class_name('_3EFt_').text
 					texto = post[ultimo_post].find_element_by_class_name('selectable-text').text
-					
-					print(texto)
-					return(texto)
+					data.append({'chatid': chatid,
+								'text': texto,
+								'time': hora})
+
+					#print(data)
+					return jsonify(data)
 				except:
 					pass
 				
