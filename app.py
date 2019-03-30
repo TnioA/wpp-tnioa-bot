@@ -13,7 +13,7 @@ class Botzap:
 		print('Bot Iniciado')
 		#self.driver = webdriver.Edge(executable_path='driver\MicrosoftWebDriver') # - se for microsoft edge
 		#self.driver = webdriver.Chrome(executable_path='driver/chromedriver') # se for chrome
-		self.driver = webdriver.Firefox(executable_path='driver/geckodriver') # se for firefox
+		self.driver = webdriver.Firefox(executable_path=os.getcwd() + '/driver/geckodriver') # se for firefox
 		
 		self.driver.get('https://web.whatsapp.com/source=&data=#')
 		time.sleep(5)
@@ -41,7 +41,7 @@ class Botzap:
 		time.sleep(1)
 
 	def message_loop(self):
-		data = {}
+		data = {'chatid': '', 'text': '', 'time': ''}
 		contactBox = self.driver.find_elements_by_class_name('_2wP_Y')
 		try:
 			if(self.driver.find_element_by_class_name('OUeyt')):
@@ -61,11 +61,11 @@ class Botzap:
 						    'time': str(hora)}
 
 					# print(data)
-					return data
+					return jsonify(data)
 				except:
-					print('estou no primeiro pass')
-					pass
+					print('Não consegui trazer a informações da msg.')
+					return jsonify(data)
 				
 		except:
-			print('estou no segundo pass')
-			pass
+			print('Sem últimas conversas...')
+			return jsonify(data)

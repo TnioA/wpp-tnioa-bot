@@ -1,3 +1,2 @@
 selenium
-request
-chatterbot
+requests
