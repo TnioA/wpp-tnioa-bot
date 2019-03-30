@@ -26,9 +26,10 @@ bot = Botzap('TanTanio_bot')
 
 while True:
 	time.sleep(2)
-	retorno = bot.message_loop()
+	conteudo = bot.message_loop()
 	# verifica a chave 'text' dentro do json retorno
-	if 'text' in retorno:
+	if 'text' in conteudo:
+		retorno = conteudo['text']
 		if retorno == '/oibot':
 			print('recebido comando ola')
 			bot.sendMessage('Oi eu sou o bot do Tanio responda com /comandos para receber a lista de comandos e conseguir se comunicar comigo')

@@ -59,9 +59,11 @@ class Botzap:
 					data = {'chatid': str(chatid),
 						    'text': str(texto),
 						    'time': str(hora)}
+					return data
 
 				except:
-					print('Não consegui trazer a informações da msg.')			
+					print('Não consegui trazer a informações da msg.')
+					return data		
 		except:
 			print('Sem últimas conversas...')
-		return data
+			return data
