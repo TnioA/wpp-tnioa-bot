@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
-import time
 import os
 import re
 import time
-import requests
 import json
 
 
@@ -14,8 +12,8 @@ class Botzap:
 		
 		print('Bot Iniciado')
 		#self.driver = webdriver.Edge(executable_path='driver\MicrosoftWebDriver') # - se for microsoft edge
-		self.driver = webdriver.Chrome(executable_path='driver/chromedriver') # se for chrome
-		#self.driver = webdriver.Firefox(executable_path='driver/geckodriver') # se for firefox
+		#self.driver = webdriver.Chrome(executable_path='driver/chromedriver') # se for chrome
+		self.driver = webdriver.Firefox(executable_path='driver/geckodriver') # se for firefox
 		
 		self.driver.get('https://web.whatsapp.com/source=&data=#')
 		time.sleep(5)
@@ -43,9 +41,8 @@ class Botzap:
 		time.sleep(1)
 
 	def message_loop(self):
-
+		data = {}
 		contactBox = self.driver.find_elements_by_class_name('_2wP_Y')
-		data = []
 		try:
 			if(self.driver.find_element_by_class_name('OUeyt')):
 				escolha_contato = self.driver.find_element_by_class_name('OUeyt')
@@ -59,20 +56,16 @@ class Botzap:
 					time.sleep(2)
 					hora = post[ultimo_post].find_element_by_class_name('_3EFt_').text
 					texto = post[ultimo_post].find_element_by_class_name('selectable-text').text
-					data.append({'chatid': chatid,
-								'text': texto,
-								'time': hora})
+					data = {'chatid': str(chatid),
+						    'text': str(texto),
+						    'time': str(hora)}
 
-					#print(data)
-					return jsonify(data)
+					# print(data)
+					return data
 				except:
+					print('estou no primeiro pass')
 					pass
 				
 		except:
+			print('estou no segundo pass')
 			pass
-
-
-
-		
-
-		

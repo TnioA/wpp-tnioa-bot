@@ -1,2 +1,3 @@
-pip install selenium
-pip install chatterbot
+selenium
+request
+chatterbot
