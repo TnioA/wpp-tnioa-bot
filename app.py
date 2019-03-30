@@ -60,12 +60,8 @@ class Botzap:
 						    'text': str(texto),
 						    'time': str(hora)}
 
-					# print(data)
-					return jsonify(data)
 				except:
-					print('Não consegui trazer a informações da msg.')
-					return jsonify(data)
-				
+					print('Não consegui trazer a informações da msg.')			
 		except:
 			print('Sem últimas conversas...')
-			return jsonify(data)
+		return data

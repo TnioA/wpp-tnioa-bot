@@ -126,3 +126,5 @@ dmypy.json
 # Logs
 *.log
 
+# Vscode
+.vscode/
