@@ -14,6 +14,12 @@ def getnews():
 	conteudo = json.loads(resp.content)
 	return(conteudo)
 
+def getfutebol():
+	#API DE DE FUTEBOL
+	url = 'http://restfutebol.herokuapp.com/api/futebol/serie-a/tabela'
+	resp = requests.get(url)
+	conteudo = json.loads(resp.content)
+	return(conteudo)
 
 def getmovies():
 	#API DE FILMES BRASIL
@@ -25,6 +31,7 @@ def getmovies():
 bot = Botzap('TanTanio_bot')
 
 while True:
+
 	conteudo = bot.message_loop()
 	# verifica a chave 'text' dentro do json retorno
 	if 'text' in conteudo:
@@ -39,13 +46,17 @@ while True:
 			msg_movies = ''
 			c = 1
 			for cont in conteudo['filmes']:
-				msg_movies = msg_movies + ('Filme {}: \n'.format(c) + 'Titulo: ' + cont['nome'] + ' Estreado em: ' + cont['data'] + '\n\n')
+				msg_movies = msg_movies + ('Filme {}: \n'.format(c) + 'Titulo: ' + cont['nome'] + ' Estreado em: ' + cont['data'] + '\n')
 				c = int(c) + 1
 			bot.sendMessage(msg_movies)
 		
 		elif retorno == '/futebol':
 			print('recebido o comando futebol')
-			bot.sendMessage('Ainda em desenvolvimento')
+			conteudo = getfutebol()
+			msg_futebol = ''
+			for cont in conteudo['tabela']:
+				msg_futebol = msg_futebol + (cont['posicao'] + ' - ' + cont['time'] + '\n')
+			bot.sendMessage(msg_futebol)
 		
 		elif retorno == '/noticias':
 			print('recebido o comando noticias')
@@ -53,13 +64,13 @@ while True:
 			msg_news = ''
 			c = 1
 			for cont in conteudo['articles']:
-				msg_news = (msg_news + ('Noticia {}: \n'.format(c) + cont['title'] + '\n\n'))
+				msg_news = (msg_news + ('Noticia {}: \n'.format(c) + cont['title'] + '\n'))
 				c = int(c) + 1
 			bot.sendMessage(msg_news)
 
 		elif retorno == '/comandos':
 			print('recebido comando lista de comandos')
-			bot.sendMessage('Comandos:\n\n/oibot = Para me chamar\n/noticias = Para receber algumas noticias\n/futebol = Para receber a tabela do Brasileirao Serie A\n/filmes = Para receber os filmes que estao em cartaz\n/comandos = Para receber uma lista de comandos')
+			bot.sendMessage('Comandos:\n/oibot = Para me chamar\n/noticias = Para receber algumas noticias\n/futebol = Para receber a tabela do Brasileirao Serie A\n/filmes = Para receber os filmes que estao em cartaz\n/comandos = Para receber uma lista de comandos')
 
 		else:
 			pass

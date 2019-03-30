@@ -11,9 +11,9 @@ class Botzap:
 	def __init__(self, nome):
 		
 		print('Bot Iniciado')
-		#self.driver = webdriver.Edge(executable_path='driver\MicrosoftWebDriver') # - se for microsoft edge
+		self.driver = webdriver.Edge(executable_path='driver\MicrosoftWebDriver') # - se for microsoft edge
 		#self.driver = webdriver.Chrome(executable_path='driver/chromedriver') # se for chrome
-		self.driver = webdriver.Firefox(executable_path='driver/geckodriver') # se for firefox
+		#self.driver = webdriver.Firefox(executable_path='driver/geckodriver') # se for firefox
 		
 		self.driver.get('https://web.whatsapp.com/source=&data=#')
 		time.sleep(5)
@@ -65,5 +65,5 @@ class Botzap:
 					print('Não consegui trazer a informações da msg.')
 					return data		
 		except:
-			print('Sem últimas conversas...')
+			#print('Sem últimas conversas...')
 			return data
