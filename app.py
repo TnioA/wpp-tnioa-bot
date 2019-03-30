@@ -13,7 +13,7 @@ class Botzap:
 		print('Bot Iniciado')
 		#self.driver = webdriver.Edge(executable_path='driver\MicrosoftWebDriver') # - se for microsoft edge
 		#self.driver = webdriver.Chrome(executable_path='driver/chromedriver') # se for chrome
-		self.driver = webdriver.Firefox(executable_path=os.getcwd() + '/driver/geckodriver') # se for firefox
+		self.driver = webdriver.Firefox(executable_path='driver/geckodriver') # se for firefox
 		
 		self.driver.get('https://web.whatsapp.com/source=&data=#')
 		time.sleep(5)

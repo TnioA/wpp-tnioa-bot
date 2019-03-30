@@ -25,7 +25,6 @@ def getmovies():
 bot = Botzap('TanTanio_bot')
 
 while True:
-	time.sleep(2)
 	conteudo = bot.message_loop()
 	# verifica a chave 'text' dentro do json retorno
 	if 'text' in conteudo:
