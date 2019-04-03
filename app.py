@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
-import os
-import re
-import time
-import json
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+import content
+import os, re, time, json
 
 
 class Botzap:
@@ -11,34 +11,219 @@ class Botzap:
 	def __init__(self, nome):
 		
 		print('Bot Iniciado')
-		self.driver = webdriver.Edge(executable_path='driver\MicrosoftWebDriver') # - se for microsoft edge
-		#self.driver = webdriver.Chrome(executable_path='driver/chromedriver') # se for chrome
+		#self.driver = webdriver.Edge(executable_path='driver/MicrosoftWebDriver') # - se for microsoft edge
+		self.driver = webdriver.Chrome(executable_path='driver/chromedriver') # se for chrome
 		#self.driver = webdriver.Firefox(executable_path='driver/geckodriver') # se for firefox
 		
 		self.driver.get('https://web.whatsapp.com/source=&data=#')
+		actions = ActionChains(self.driver)
+
 		time.sleep(5)
-		#pesquisaBox = self.driver.find_element_by_class_name('jN-F5')
-		#pesquisaBox.send_keys(nome)
-		#time.sleep(2)
-		#contato = self.driver.find_element_by_xpath('//span[@title = "{}"]'.format(nome))
-		#contato.click()
-		#time.sleep(1)
+
+		try:
+			#----- MENSAGEM DE ATIVO----------#
+
+			pesquisaBox = self.driver.find_element_by_class_name('jN-F5')
+			pesquisaBox.send_keys(nome)
+			time.sleep(2)
+			contato = self.driver.find_element_by_xpath('//span[@title = "{}"]'.format(nome))
+			contato.click()
+			time.sleep(1)
+
+	 
+			#PRIMEIRA MENSAGEM
+			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox.click()
+			actions.send_keys('Estou ativo:')
+			actions.key_down(Keys.SHIFT)
+			actions.send_keys(Keys.ENTER)
+			actions.key_up(Keys.SHIFT)
+			actions.send_keys("Ativo desde agora")
+			actions.perform()
+			actions.reset_actions()
+			time.sleep(1)
+			enviar = self.driver.find_element_by_class_name('_35EW6')
+			enviar.click()
+			time.sleep(1)
+
+			# SEGUNDA MENSAGEM
+			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox.click()
+			actions.send_keys('Nossa conversa ainda nao acabou:')
+			actions.key_down(Keys.SHIFT)
+			actions.send_keys(Keys.ENTER)
+			actions.key_up(Keys.SHIFT)
+			actions.send_keys("Fale comigo a hora que quiser ok")
+			actions.perform()
+			actions.reset_actions()
+			time.sleep(1)
+			enviar = self.driver.find_element_by_class_name('_35EW6')
+			enviar.click()
+			time.sleep(1)
+			
+		except Exception as e:
+			print("Aguardando leitura do QR-Code")
+
+		
+	def sendMessage(self, comando):
+		actions = ActionChains(self.driver)
 		#mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
-		#mensagemBox.send_keys('Estou ativo')
-		#time.sleep(1)
-		#enviar = self.driver.find_element_by_class_name('_35EW6')
+		#mensagemBox.send_keys(texto)
+		#time.sleep(2)
+
+		#botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
 		#enviar.click()
 		#time.sleep(1)
+		if(comando == 'ola'):
+			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox.click()
+			actions.send_keys('Oi eu sou o bot do Tanio responda com /comandos para receber a lista de comandos e conseguir se comunicar comigo')
+			actions.perform()
+			actions.reset_actions()
+			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+			botaoEnviar.click()
 
-	def sendMessage(self, texto):
+		elif(comando == 'filmes'):
+			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox.click()
+			conteudo = content.getmovies()
+			
+			mensagemBox.click()
+			actions.send_keys("*Filmes em Cartaz*")
+			actions.key_down(Keys.SHIFT)
+			actions.send_keys(Keys.ENTER)
+			actions.send_keys(Keys.ENTER)
+			actions.key_up(Keys.SHIFT)
+			actions.perform()
+			actions.reset_actions()
 
-		mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
-		mensagemBox.send_keys(texto)
-		time.sleep(2)
+			for cont in conteudo['filmes']:
+				actions.send_keys('Titulo: ' + cont['nome'])
+				actions.key_down(Keys.SHIFT)
+				actions.send_keys(Keys.ENTER)
+				actions.key_up(Keys.SHIFT)
+				actions.send_keys('Estreado em: ' + cont['data'])
+				actions.key_down(Keys.SHIFT)
+				actions.send_keys(Keys.ENTER)
+				actions.send_keys(Keys.ENTER)
+				actions.key_up(Keys.SHIFT)
+				actions.perform()
+				actions.reset_actions()
 
-		enviar = self.driver.find_element_by_class_name('_35EW6')
-		enviar.click()
-		time.sleep(1)
+			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+			botaoEnviar.click()
+
+		elif(comando == 'tabela'):
+			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox.click()
+			conteudo = content.gettabela()
+
+			mensagemBox.click()
+			actions.send_keys("*Tabela Brasileirão*")
+			actions.key_down(Keys.SHIFT)
+			actions.send_keys(Keys.ENTER)
+			actions.send_keys(Keys.ENTER)
+			actions.key_up(Keys.SHIFT)
+			actions.perform()
+			actions.reset_actions()
+
+			for cont in conteudo['tabela']:
+				actions.send_keys(cont['posicao'] + ' - ' + cont['time'])
+				actions.key_down(Keys.SHIFT)
+				actions.send_keys(Keys.ENTER)
+				actions.key_up(Keys.SHIFT)
+				actions.perform()
+				actions.reset_actions()
+
+			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+			botaoEnviar.click()
+
+		elif(comando == 'jogos'):
+			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox.click()
+			conteudo = content.getjogos()
+
+			mensagemBox.click()
+			actions.send_keys("*Jogos da Rodada*")
+			actions.key_down(Keys.SHIFT)
+			actions.send_keys(Keys.ENTER)
+			actions.send_keys(Keys.ENTER)
+			actions.key_up(Keys.SHIFT)
+			actions.perform()
+			actions.reset_actions()
+
+			for cont in conteudo['Rodada 1'][0]['jogos']:
+				actions.send_keys(cont['sigla_time_casa'] + ' __ X __ ' + cont['sigla_time_fora'])
+				actions.key_down(Keys.SHIFT)
+				actions.send_keys(Keys.ENTER)
+				actions.key_up(Keys.SHIFT)
+				actions.perform()
+				actions.reset_actions()
+
+			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+			botaoEnviar.click()
+
+		elif(comando == 'noticias'):
+			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox.click()
+			conteudo = content.getnews()
+
+			mensagemBox.click()
+			actions.send_keys("*Últimas Notícias*")
+			actions.key_down(Keys.SHIFT)
+			actions.send_keys(Keys.ENTER)
+			actions.send_keys(Keys.ENTER)
+			actions.key_up(Keys.SHIFT)
+			actions.perform()
+			actions.reset_actions()
+			c = 1
+			for cont in conteudo['articles']:
+				actions.send_keys('Noticia {}: '.format(c) + cont['title'])
+				actions.key_down(Keys.SHIFT)
+				actions.send_keys(Keys.ENTER)
+				actions.send_keys(Keys.ENTER)
+				actions.key_up(Keys.SHIFT)
+				actions.perform()
+				actions.reset_actions()
+				c = int(c) + 1
+
+			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+			botaoEnviar.click()
+
+		elif(comando == 'comandos'):
+			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox.click()
+			actions.send_keys("*Lista Comandos*")
+			actions.key_down(Keys.SHIFT)
+			actions.send_keys(Keys.ENTER)
+			actions.send_keys(Keys.ENTER)
+			actions.key_up(Keys.SHIFT)
+			actions.send_keys('/oibot = Para me chamar')
+			actions.key_down(Keys.SHIFT)
+			actions.send_keys(Keys.ENTER)
+			actions.key_up(Keys.SHIFT)
+			actions.send_keys('/noticias = Para receber algumas noticias')
+			actions.key_down(Keys.SHIFT)
+			actions.send_keys(Keys.ENTER)
+			actions.key_up(Keys.SHIFT)
+			actions.send_keys('/tabela = Para receber a tabela do Brasileirao Serie A')
+			actions.key_down(Keys.SHIFT)
+			actions.send_keys(Keys.ENTER)
+			actions.key_up(Keys.SHIFT)
+			actions.send_keys('/jogos = Para receber os jogos da rodada atual do Brasileirao Serie A')
+			actions.key_down(Keys.SHIFT)
+			actions.send_keys(Keys.ENTER)
+			actions.key_up(Keys.SHIFT)
+			actions.send_keys('/filmes = Para receber os filmes que estao em cartaz')
+			actions.key_down(Keys.SHIFT)
+			actions.send_keys(Keys.ENTER)
+			actions.key_up(Keys.SHIFT)
+			actions.send_keys('/comandos = Para receber uma lista de comandos')
+			actions.perform()
+			actions.reset_actions()
+			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+			botaoEnviar.click()
+
 
 	def message_loop(self):
 		data = {'chatid': '', 'text': '', 'time': ''}
