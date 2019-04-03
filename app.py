@@ -157,6 +157,11 @@ class Botzap:
 				actions.key_down(Keys.SHIFT)
 				actions.send_keys(Keys.ENTER)
 				actions.key_up(Keys.SHIFT)
+				actions.send_keys(cont['jogo'])
+				actions.key_down(Keys.SHIFT)
+				actions.send_keys(Keys.ENTER)
+				actions.send_keys(Keys.ENTER)
+				actions.key_up(Keys.SHIFT)
 				actions.perform()
 				actions.reset_actions()
 
@@ -190,6 +195,31 @@ class Botzap:
 			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
 			botaoEnviar.click()
 
+		elif(comando == 'moedas'):
+			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox.click()
+			conteudo = content.getmoeadas()
+
+			mensagemBox.click()
+			actions.send_keys("*Cotação Diária*")
+			actions.key_down(Keys.SHIFT)
+			actions.send_keys(Keys.ENTER)
+			actions.send_keys(Keys.ENTER)
+			actions.key_up(Keys.SHIFT)
+			actions.perform()
+			actions.reset_actions()
+			for cont in conteudo['moedas']:
+				actions.send_keys(cont['nome'] + ': ' + cont['valor'])
+				actions.key_down(Keys.SHIFT)
+				actions.send_keys(Keys.ENTER)
+				actions.key_up(Keys.SHIFT)
+				actions.perform()
+				actions.reset_actions()
+
+			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+			botaoEnviar.click()
+
+
 		elif(comando == 'comandos'):
 			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
 			mensagemBox.click()
@@ -203,6 +233,10 @@ class Botzap:
 			actions.send_keys(Keys.ENTER)
 			actions.key_up(Keys.SHIFT)
 			actions.send_keys('/noticias = Para receber algumas noticias')
+			actions.key_down(Keys.SHIFT)
+			actions.send_keys(Keys.ENTER)
+			actions.key_up(Keys.SHIFT)
+			actions.send_keys('/moedas = Para receber a cotação atual das principais moedas')
 			actions.key_down(Keys.SHIFT)
 			actions.send_keys(Keys.ENTER)
 			actions.key_up(Keys.SHIFT)

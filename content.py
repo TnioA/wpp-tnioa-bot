@@ -29,3 +29,10 @@ def getmovies():
 	resp = requests.get(url)
 	conteudo = json.loads(resp.content)
 	return(conteudo)
+
+def getmoedas():
+	#API DE COTACOES
+	url = 'https://restcotacoes.herokuapp.com/'
+	resp = requests.get(url)
+	conteudo = json.loads(resp.content)
+	return(conteudo)

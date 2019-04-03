@@ -31,6 +31,10 @@ while True:
 			print('recebido o comando noticias')
 			bot.sendMessage('noticias')
 
+		elif retorno == '/moedas':
+			print('recebido o comando noticias')
+			bot.sendMessage('moedas')
+
 		elif retorno == '/comandos':
 			print('recebido comando lista de comandos')
 			bot.sendMessage('comandos')
