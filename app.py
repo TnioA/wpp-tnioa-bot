@@ -11,9 +11,9 @@ class Botzap:
 	def __init__(self, nome):
 		
 		print('Bot Iniciado')
-		#self.driver = webdriver.Edge(executable_path='driver/MicrosoftWebDriver') # - se for microsoft edge
-		self.driver = webdriver.Chrome(executable_path='driver/chromedriver') # se for chrome
-		#self.driver = webdriver.Firefox(executable_path='driver/geckodriver') # se for firefox
+		#self.driver = webdriver.Edge(executable_path='driver/windows/MicrosoftWebDriver') # - se for microsoft edge
+		self.driver = webdriver.Chrome(executable_path='driver/mac/chromedriver') # se for chrome
+		#self.driver = webdriver.Firefox(executable_path='driver/mac/geckodriver') # se for firefox
 		
 		self.driver.get('https://web.whatsapp.com/source=&data=#')
 		actions = ActionChains(self.driver)
@@ -30,7 +30,6 @@ class Botzap:
 			contato.click()
 			time.sleep(1)
 
-	 
 			#PRIMEIRA MENSAGEM
 			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
 			mensagemBox.click()
