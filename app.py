@@ -12,7 +12,7 @@ class Botzap:
 		
 		print('Bot Iniciado')
 		#self.driver = webdriver.Edge(executable_path='driver/windows/MicrosoftWebDriver') # - se for microsoft edge
-		self.driver = webdriver.Chrome(executable_path='driver/windows/chromedriver') # se for chrome
+		self.driver = webdriver.Chrome(executable_path='driver/mac/chromedriver') # se for chrome
 		#self.driver = webdriver.Firefox(executable_path='driver/mac/geckodriver') # se for firefox
 		
 		self.driver.get('https://web.whatsapp.com/source=&data=#')
@@ -143,7 +143,7 @@ class Botzap:
 			conteudo = content.getjogos()
 
 			mensagemBox.click()
-			actions.send_keys("*Jogos da Rodada*")
+			actions.send_keys('*Jogos da ' + conteudo['rodada'] + '*')
 			actions.key_down(Keys.SHIFT)
 			actions.send_keys(Keys.ENTER)
 			actions.send_keys(Keys.ENTER)
@@ -151,13 +151,14 @@ class Botzap:
 			actions.perform()
 			actions.reset_actions()
 
-			for cont in conteudo['Rodada 1'][0]['jogos']:
+			for cont in conteudo['jogos']:
 				actions.send_keys(cont['jogo'])
 				actions.key_down(Keys.SHIFT)
 				actions.send_keys(Keys.ENTER)
 				actions.key_up(Keys.SHIFT)
 				actions.send_keys(cont['sigla_time_casa'] + ' __ X __ ' + cont['sigla_time_fora'])
 				actions.key_down(Keys.SHIFT)
+				actions.send_keys(Keys.ENTER)
 				actions.send_keys(Keys.ENTER)
 				actions.key_up(Keys.SHIFT)
 				actions.perform()
