@@ -32,7 +32,7 @@ while True:
 			bot.sendMessage('noticias')
 
 		elif retorno == '/moedas':
-			print('recebido o comando noticias')
+			print('recebido o comando moedas')
 			bot.sendMessage('moedas')
 
 		elif retorno == '/comandos':

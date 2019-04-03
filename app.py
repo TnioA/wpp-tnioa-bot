@@ -152,7 +152,7 @@ class Botzap:
 			actions.perform()
 			actions.reset_actions()
 
-			for cont in conteudo['Rodada 1'][0]['jogos']:
+			for cont in conteudo['Rodada 1'][0]:
 				actions.send_keys(cont['sigla_time_casa'] + ' __ X __ ' + cont['sigla_time_fora'])
 				actions.key_down(Keys.SHIFT)
 				actions.send_keys(Keys.ENTER)
@@ -198,7 +198,7 @@ class Botzap:
 		elif(comando == 'moedas'):
 			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
 			mensagemBox.click()
-			conteudo = content.getmoeadas()
+			conteudo = content.getmoedas()
 
 			mensagemBox.click()
 			actions.send_keys("*Cotação Diária*")
