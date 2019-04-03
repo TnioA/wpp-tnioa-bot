@@ -12,7 +12,7 @@ class Botzap:
 		
 		print('Bot Iniciado')
 		#self.driver = webdriver.Edge(executable_path='driver/windows/MicrosoftWebDriver') # - se for microsoft edge
-		self.driver = webdriver.Chrome(executable_path='driver/mac/chromedriver') # se for chrome
+		self.driver = webdriver.Chrome(executable_path='driver/windows/chromedriver') # se for chrome
 		#self.driver = webdriver.Firefox(executable_path='driver/mac/geckodriver') # se for firefox
 		
 		self.driver.get('https://web.whatsapp.com/source=&data=#')
@@ -151,14 +151,13 @@ class Botzap:
 			actions.perform()
 			actions.reset_actions()
 
-			for cont in conteudo['Rodada 1'][0]:
-				actions.send_keys(cont['sigla_time_casa'] + ' __ X __ ' + cont['sigla_time_fora'])
-				actions.key_down(Keys.SHIFT)
-				actions.send_keys(Keys.ENTER)
-				actions.key_up(Keys.SHIFT)
+			for cont in conteudo['Rodada 1'][0]['jogos']:
 				actions.send_keys(cont['jogo'])
 				actions.key_down(Keys.SHIFT)
 				actions.send_keys(Keys.ENTER)
+				actions.key_up(Keys.SHIFT)
+				actions.send_keys(cont['sigla_time_casa'] + ' __ X __ ' + cont['sigla_time_fora'])
+				actions.key_down(Keys.SHIFT)
 				actions.send_keys(Keys.ENTER)
 				actions.key_up(Keys.SHIFT)
 				actions.perform()
@@ -261,6 +260,12 @@ class Botzap:
 	def message_loop(self):
 		data = {'chatid': '', 'text': '', 'time': ''}
 		contactBox = self.driver.find_elements_by_class_name('_2wP_Y')
+		try:
+			if(self.driver.find_element_by_class_name('_298R6')):
+				droppage = self.driver.find_element_by_class_name('_298R6')
+				droppage.click()
+		except:
+			pass
 		try:
 			if(self.driver.find_element_by_class_name('OUeyt')):
 				escolha_contato = self.driver.find_element_by_class_name('OUeyt')
