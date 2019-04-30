@@ -12,7 +12,7 @@ class Botzap:
 		
 		print('Bot Iniciado')
 		#self.driver = webdriver.Edge(executable_path='driver/windows/MicrosoftWebDriver') # - se for microsoft edge
-		self.driver = webdriver.Chrome(executable_path='driver/rasp/chromedriver') # se for chrome
+		self.driver = webdriver.Chrome(executable_path='driver/mac/chromedriver') # se for chrome
 		#self.driver = webdriver.Firefox(executable_path='driver/mac/geckodriver') # se for firefox
 		
 		self.driver.get('https://web.whatsapp.com/source=&data=#')
@@ -63,7 +63,22 @@ class Botzap:
 		except Exception as e:
 			print("Aguardando leitura do QR-Code")
 
-		
+	def quebra_linha(self, times):
+
+		if times == 1:
+			actions.key_down(Keys.SHIFT)
+			actions.send_keys(Keys.ENTER)
+			actions.key_up(Keys.SHIFT)
+			actions.perform()
+			actions.reset_actions()
+		if times == 2:
+			actions.key_down(Keys.SHIFT)
+			actions.send_keys(Keys.ENTER)
+			actions.send_keys(Keys.ENTER)
+			actions.key_up(Keys.SHIFT)
+			actions.perform()
+			actions.reset_actions()
+
 	def sendMessage(self, comando):
 		actions = ActionChains(self.driver)
 		#mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
@@ -127,7 +142,7 @@ class Botzap:
 			actions.reset_actions()
 
 			for cont in conteudo['tabela']:
-				actions.send_keys(cont['posicao'] + ' - ' + cont['time'])
+				actions.send_keys(cont['posicao'] + ' - ' + cont['time'] + ' - ' + cont['pontos'])
 				actions.key_down(Keys.SHIFT)
 				actions.send_keys(Keys.ENTER)
 				actions.key_up(Keys.SHIFT)
@@ -156,7 +171,7 @@ class Botzap:
 				actions.key_down(Keys.SHIFT)
 				actions.send_keys(Keys.ENTER)
 				actions.key_up(Keys.SHIFT)
-				actions.send_keys(cont['sigla_time_casa'] + ' __ X __ ' + cont['sigla_time_fora'])
+				actions.send_keys(cont['sigla_time_casa'] + ' ' + cont['placar_time_casa'] + ' X ' + cont['placar_time_fora'] + ' ' + cont['sigla_time_fora'])
 				actions.key_down(Keys.SHIFT)
 				actions.send_keys(Keys.ENTER)
 				actions.send_keys(Keys.ENTER)
