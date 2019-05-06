@@ -12,7 +12,7 @@ class Botzap:
 		
 		print('Bot Iniciado')
 		#self.driver = webdriver.Edge(executable_path='driver/windows/MicrosoftWebDriver') # - se for microsoft edge
-		self.driver = webdriver.Chrome(executable_path='driver/mac/chromedriver') # se for chrome
+		self.driver = webdriver.Chrome(executable_path='driver/windows/chromedriver') # se for chrome
 		#self.driver = webdriver.Firefox(executable_path='driver/mac/geckodriver') # se for firefox
 		
 		self.driver.get('https://web.whatsapp.com/source=&data=#')
@@ -45,23 +45,8 @@ class Botzap:
 			enviar.click()
 			time.sleep(1)
 
-			# SEGUNDA MENSAGEM
-			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
-			mensagemBox.click()
-			actions.send_keys('Nossa conversa ainda nao acabou:')
-			actions.key_down(Keys.SHIFT)
-			actions.send_keys(Keys.ENTER)
-			actions.key_up(Keys.SHIFT)
-			actions.send_keys("Fale comigo a hora que quiser ok")
-			actions.perform()
-			actions.reset_actions()
-			time.sleep(1)
-			enviar = self.driver.find_element_by_class_name('_35EW6')
-			enviar.click()
-			time.sleep(1)
-			
 		except Exception as e:
-			print("Aguardando leitura do QR-Code")
+			print("Nao foi possivel ler o QR-Code!")
 
 	def quebra_linha(self, times):
 
