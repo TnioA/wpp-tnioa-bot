@@ -127,6 +127,36 @@ class Botzap:
 			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
 			botaoEnviar.click()
 
+		elif(comando == 'fofocas'):
+			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox.click()
+			conteudo = content.getfofocas()
+			
+			mensagemBox.click()
+			actions.send_keys("*Ultimas Fofocas*")
+			actions.key_down(Keys.SHIFT)
+			actions.send_keys(Keys.ENTER)
+			actions.send_keys(Keys.ENTER)
+			actions.key_up(Keys.SHIFT)
+			actions.perform()
+			actions.reset_actions()
+
+			for cont in conteudo['ultimas']:
+				actions.send_keys('Noticia: ' + cont['conteudo'])
+				actions.key_down(Keys.SHIFT)
+				actions.send_keys(Keys.ENTER)
+				actions.key_up(Keys.SHIFT)
+				actions.send_keys('Data: ' + cont['data'])
+				actions.key_down(Keys.SHIFT)
+				actions.send_keys(Keys.ENTER)
+				actions.send_keys(Keys.ENTER)
+				actions.key_up(Keys.SHIFT)
+				actions.perform()
+				actions.reset_actions()
+
+			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+			botaoEnviar.click()
+
 		elif(comando == 'tabela'):
 			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
 			mensagemBox.click()
@@ -247,6 +277,10 @@ class Botzap:
 			actions.send_keys(Keys.ENTER)
 			actions.key_up(Keys.SHIFT)
 			actions.send_keys('/noticias = Para receber algumas noticias')
+			actions.key_down(Keys.SHIFT)
+			actions.send_keys(Keys.ENTER)
+			actions.key_up(Keys.SHIFT)
+			actions.send_keys('/fofocas = Para receber as ultimas fofocas')
 			actions.key_down(Keys.SHIFT)
 			actions.send_keys(Keys.ENTER)
 			actions.key_up(Keys.SHIFT)

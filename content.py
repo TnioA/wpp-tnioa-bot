@@ -37,3 +37,10 @@ def getmoedas():
 	resp = requests.get(url)
 	conteudo = json.loads(resp.content)
 	return(conteudo)
+
+def getfofocas():
+	#API DE FOFOCAS
+	url = 'https://restfofocas.herokuapp.com/api/fofocas'
+	resp = requests.get(url)
+	conteudo = json.loads(resp.content)
+	return(conteudo)

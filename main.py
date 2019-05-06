@@ -18,6 +18,10 @@ while True:
 		elif retorno == '/filmes':
 			print('recebido o comando filmes')
 			bot.sendMessage('filmes')
+
+		elif retorno == '/fofocas':
+			print('recebido o comando fofocas')
+			bot.sendMessage('fofocas')
 		
 		elif retorno == '/tabela':
 			print('recebido o comando tabela')
