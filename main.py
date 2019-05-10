@@ -12,7 +12,7 @@ while True:
 	if 'text' in conteudo:
 		retorno = conteudo['text']
 		if retorno == '/oibot':
-			print('recebido comando ola')
+			print('recebido o comando ola')
 			bot.sendMessage('ola')
 		
 		elif retorno == '/filmes':
@@ -40,7 +40,7 @@ while True:
 			bot.sendMessage('moedas')
 
 		elif retorno == '/comandos':
-			print('recebido comando lista de comandos')
+			print('recebido o comando lista de comandos')
 			bot.sendMessage('comandos')
 
 		else:

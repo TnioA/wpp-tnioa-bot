@@ -12,13 +12,13 @@ class Botzap:
 		
 		print('Bot Iniciado')
 		#self.driver = webdriver.Edge(executable_path='driver/windows/MicrosoftWebDriver') # - se for microsoft edge
-		self.driver = webdriver.Chrome(executable_path='driver/windows/chromedriver') # se for chrome
+		self.driver = webdriver.Chrome(executable_path='driver/rasp/chromedriver') # se for chrome
 		#self.driver = webdriver.Firefox(executable_path='driver/mac/geckodriver') # se for firefox
 		
 		self.driver.get('https://web.whatsapp.com/source=&data=#')
 		actions = ActionChains(self.driver)
 
-		time.sleep(5)
+		time.sleep(60)
 
 		try:
 			#----- MENSAGEM DE ATIVO----------#
@@ -305,13 +305,13 @@ class Botzap:
 			if(self.driver.find_element_by_class_name('OUeyt')):
 				escolha_contato = self.driver.find_element_by_class_name('OUeyt')
 				escolha_contato.click()
-				time.sleep(2)
+				time.sleep(1)
 				chatid = self.driver.find_element_by_class_name('_3XrHh').find_element_by_class_name('_1wjpf').text
 				
 				post = self.driver.find_elements_by_class_name('_3_7SH')
 				ultimo_post = len(post) - 1
 				try:
-					time.sleep(2)
+					time.sleep(1)
 					hora = post[ultimo_post].find_element_by_class_name('_3EFt_').text
 					texto = post[ultimo_post].find_element_by_class_name('selectable-text').text
 					data = {'chatid': str(chatid),

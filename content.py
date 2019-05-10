@@ -7,40 +7,40 @@ def getnews():
 	#http = urllib3.PoolManager()
 	#resp = http.request('GET',url)
 	resp = requests.get(url)
-	conteudo = json.loads(resp.content)
+	conteudo = json.loads((resp.content).decode('utf-8'))
 	return(conteudo)
 
 def gettabela():
 	#API DE DE FUTEBOL
 	url = 'http://restfutebol.herokuapp.com/api/futebol/serie-a/tabela'
 	resp = requests.get(url)
-	conteudo = json.loads(resp.content)
+	conteudo = json.loads((resp.content).decode('utf-8'))
 	return(conteudo)
 
 def getjogos():
 	#API DE DE FUTEBOL
 	url = 'http://restfutebol.herokuapp.com/api/futebol/serie-a/jogos'
 	resp = requests.get(url)
-	conteudo = json.loads(resp.content)
+	conteudo = json.loads((resp.content).decode('utf-8'))
 	return(conteudo)
 
 def getmovies():
 	#API DE FILMES BRASIL
 	url = 'http://restmovies.herokuapp.com/api/filmes'
 	resp = requests.get(url)
-	conteudo = json.loads(resp.content)
+	conteudo = json.loads((resp.content).decode('utf-8'))
 	return(conteudo)
 
 def getmoedas():
 	#API DE COTACOES
 	url = 'https://restcotacoes.herokuapp.com/'
 	resp = requests.get(url)
-	conteudo = json.loads(resp.content)
+	conteudo = json.loads((resp.content).decode('utf-8'))
 	return(conteudo)
 
 def getfofocas():
 	#API DE FOFOCAS
 	url = 'https://restfofocas.herokuapp.com/api/fofocas'
 	resp = requests.get(url)
-	conteudo = json.loads(resp.content)
+	conteudo = json.loads((resp.content).decode('utf-8'))
 	return(conteudo)
