@@ -12,17 +12,15 @@ class Botzap:
 		
 		print('Bot Iniciado')
 		#self.driver = webdriver.Edge(executable_path='driver/windows/MicrosoftWebDriver') # - se for microsoft edge
-		self.driver = webdriver.Chrome(executable_path='driver/rasp/chromedriver') # se for chrome
+		self.driver = webdriver.Chrome(executable_path='driver/windows/chromedriver') # se for chrome
 		#self.driver = webdriver.Firefox(executable_path='driver/mac/geckodriver') # se for firefox
 		
 		self.driver.get('https://web.whatsapp.com/source=&data=#')
 		actions = ActionChains(self.driver)
-
-		time.sleep(60)
-
+		time.sleep(10)
+		'''
 		try:
 			#----- MENSAGEM DE ATIVO----------#
-
 			pesquisaBox = self.driver.find_element_by_class_name('jN-F5')
 			pesquisaBox.send_keys(nome)
 			time.sleep(2)
@@ -48,8 +46,10 @@ class Botzap:
 		except Exception as e:
 			print("Nao foi possivel ler o QR-Code!")
 
-	def quebra_linha(self, times):
+		'''
 
+	def quebra_linha(self, times):
+		actions = ActionChains(self.driver)
 		if times == 1:
 			actions.key_down(Keys.SHIFT)
 			actions.send_keys(Keys.ENTER)
@@ -63,16 +63,52 @@ class Botzap:
 			actions.key_up(Keys.SHIFT)
 			actions.perform()
 			actions.reset_actions()
+			
+	def valida_contato(self, contato):
+		actions = ActionChains(self.driver)
+		senha = '123456'
+		contatos_liberados = ['Tanio', '+55 85 98407-3833', 'TanTanio_bot1', 'jurema', '+55 85 8407-3833']
+		if contato in contatos_liberados:
+			print('contato liberado!!!')
+			return(True)
+		else:
+			print('contato nao liberado!')
+			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox.click()
+			actions.send_keys('*Acesso Negado!*')
+			actions.perform()
+			actions.reset_actions()
+			self.quebra_linha(1)
+			actions.send_keys('Comando liberado apenas para o Administrador, entre com a senha de administrador para usá-lo:')
+			actions.perform()
+			actions.reset_actions()
+			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+			botaoEnviar.click()
 
+			#------- aguardando a senha...
+			for contagem in range(0,10):
+				try:
+					#-- pega a ultima mensagem
+					post = self.driver.find_elements_by_class_name('_3_7SH')
+					ultimo_post = len(post) - 1
+					texto = post[ultimo_post].find_element_by_class_name('selectable-text').text
+					
+					if texto == senha:
+						mensagemBox.click()
+						actions.send_keys('Contato liberado com sucesso!')
+						actions.perform()
+						actions.reset_actions()
+						botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+						botaoEnviar.click()
+						return(True)
+				except:
+					pass
+	
+				time.sleep(1)
+
+			return(False)
 	def sendMessage(self, comando):
 		actions = ActionChains(self.driver)
-		#mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
-		#mensagemBox.send_keys(texto)
-		#time.sleep(2)
-
-		#botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
-		#enviar.click()
-		#time.sleep(1)
 		if(comando == 'ola'):
 			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
 			mensagemBox.click()
@@ -247,7 +283,27 @@ class Botzap:
 
 			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
 			botaoEnviar.click()
-
+			
+		elif(comando == 'desligaluz'):
+			chatid = self.driver.find_element_by_class_name('_3XrHh').find_element_by_class_name('_1wjpf').text
+			print("tentando validar usuario: " + chatid)
+			if self.valida_contato(chatid):
+				mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+				mensagemBox.click()
+				actions.send_keys("Luz Desligada!")
+				actions.perform()
+				actions.reset_actions()
+				botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+				botaoEnviar.click()
+			else:
+				mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+				mensagemBox.click()
+				actions.send_keys("Voce não tem acesso para esse comando!")
+				actions.perform()
+				actions.reset_actions()
+				botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+				botaoEnviar.click()
+				
 
 		elif(comando == 'comandos'):
 			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
@@ -320,8 +376,7 @@ class Botzap:
 					return data
 
 				except:
-					print('Não consegui trazer a informações da msg.')
+					print('recebido mensagem sem texto')
 					return data		
 		except:
-			#print('Sem últimas conversas...')
 			return data

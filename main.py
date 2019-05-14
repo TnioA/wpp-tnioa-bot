@@ -3,7 +3,7 @@ import os, re, time, json
 from app import Botzap
 
 
-bot = Botzap('TanTanio_bot') #nome do usuario pra mandar mensagem de ativo
+bot = Botzap('TanTanio_bot') #nome/numero do usuario pra mandar mensagem de ativo
 
 while True:
 
@@ -38,6 +38,10 @@ while True:
 		elif retorno == '/moedas':
 			print('recebido o comando moedas')
 			bot.sendMessage('moedas')
+
+		elif retorno == '/desliga_luz':
+			print('recebido o comando desligar luz')
+			bot.sendMessage('desligaluz')
 
 		elif retorno == '/comandos':
 			print('recebido o comando lista de comandos')
