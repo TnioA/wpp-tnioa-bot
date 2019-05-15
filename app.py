@@ -12,12 +12,12 @@ class Botzap:
 		
 		print('Bot Iniciado')
 		#self.driver = webdriver.Edge(executable_path='driver/windows/MicrosoftWebDriver') # - se for microsoft edge
-		self.driver = webdriver.Chrome(executable_path='driver/windows/chromedriver') # se for chrome
+		self.driver = webdriver.Chrome(executable_path='driver/rasp/chromedriver') # se for chrome
 		#self.driver = webdriver.Firefox(executable_path='driver/mac/geckodriver') # se for firefox
 		
 		self.driver.get('https://web.whatsapp.com/source=&data=#')
 		actions = ActionChains(self.driver)
-		time.sleep(10)
+		time.sleep(60)
 		'''
 		try:
 			#----- MENSAGEM DE ATIVO----------#
@@ -67,7 +67,7 @@ class Botzap:
 	def valida_contato(self, contato):
 		actions = ActionChains(self.driver)
 		senha = '123456'
-		contatos_liberados = ['Tanio', '+55 85 98407-3833', 'TanTanio_bot1', 'jurema', '+55 85 8407-3833']
+		contatos_liberados = ['Tanio', '+55 85 98407-3833', 'TanTanio_bot', 'jurema']
 		if contato in contatos_liberados:
 			print('contato liberado!!!')
 			return(True)
@@ -94,6 +94,7 @@ class Botzap:
 					texto = post[ultimo_post].find_element_by_class_name('selectable-text').text
 					
 					if texto == senha:
+						print('liberado por senha')
 						mensagemBox.click()
 						actions.send_keys('Contato liberado com sucesso!')
 						actions.perform()
@@ -125,25 +126,19 @@ class Botzap:
 			
 			mensagemBox.click()
 			actions.send_keys("*Filmes em Cartaz*")
-			actions.key_down(Keys.SHIFT)
-			actions.send_keys(Keys.ENTER)
-			actions.send_keys(Keys.ENTER)
-			actions.key_up(Keys.SHIFT)
 			actions.perform()
 			actions.reset_actions()
+			self.quebra_linha(2)
 
 			for cont in conteudo['filmes']:
 				actions.send_keys('Titulo: ' + cont['nome'])
-				actions.key_down(Keys.SHIFT)
-				actions.send_keys(Keys.ENTER)
-				actions.key_up(Keys.SHIFT)
-				actions.send_keys('Estreado em: ' + cont['data'])
-				actions.key_down(Keys.SHIFT)
-				actions.send_keys(Keys.ENTER)
-				actions.send_keys(Keys.ENTER)
-				actions.key_up(Keys.SHIFT)
 				actions.perform()
 				actions.reset_actions()
+				self.quebra_linha(1)
+				actions.send_keys('Estreado em: ' + cont['data'])
+				actions.perform()
+				actions.reset_actions()
+				self.quebra_linha(2)
 
 			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
 			botaoEnviar.click()
@@ -155,25 +150,19 @@ class Botzap:
 			
 			mensagemBox.click()
 			actions.send_keys("*Ultimas Fofocas*")
-			actions.key_down(Keys.SHIFT)
-			actions.send_keys(Keys.ENTER)
-			actions.send_keys(Keys.ENTER)
-			actions.key_up(Keys.SHIFT)
 			actions.perform()
 			actions.reset_actions()
+			self.quebra_linha(2)
 
 			for cont in conteudo['ultimas']:
 				actions.send_keys('Noticia: ' + cont['conteudo'])
-				actions.key_down(Keys.SHIFT)
-				actions.send_keys(Keys.ENTER)
-				actions.key_up(Keys.SHIFT)
-				actions.send_keys('Data: ' + cont['data'])
-				actions.key_down(Keys.SHIFT)
-				actions.send_keys(Keys.ENTER)
-				actions.send_keys(Keys.ENTER)
-				actions.key_up(Keys.SHIFT)
 				actions.perform()
 				actions.reset_actions()
+				self.quebra_linha(1)
+				actions.send_keys('Data: ' + cont['data'])
+				actions.perform()
+				actions.reset_actions()
+				self.quebra_linha(2)
 
 			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
 			botaoEnviar.click()
@@ -185,20 +174,15 @@ class Botzap:
 
 			mensagemBox.click()
 			actions.send_keys("*Tabela Brasileirão*")
-			actions.key_down(Keys.SHIFT)
-			actions.send_keys(Keys.ENTER)
-			actions.send_keys(Keys.ENTER)
-			actions.key_up(Keys.SHIFT)
 			actions.perform()
 			actions.reset_actions()
+			self.quebra_linha(2)
 
 			for cont in conteudo['tabela']:
 				actions.send_keys(cont['posicao'] + ' - ' + cont['time'] + ' - ' + cont['pontos'])
-				actions.key_down(Keys.SHIFT)
-				actions.send_keys(Keys.ENTER)
-				actions.key_up(Keys.SHIFT)
 				actions.perform()
 				actions.reset_actions()
+				self.quebra_linha(1)
 
 			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
 			botaoEnviar.click()
@@ -210,25 +194,19 @@ class Botzap:
 
 			mensagemBox.click()
 			actions.send_keys('*Jogos da ' + conteudo['rodada'] + '*')
-			actions.key_down(Keys.SHIFT)
-			actions.send_keys(Keys.ENTER)
-			actions.send_keys(Keys.ENTER)
-			actions.key_up(Keys.SHIFT)
 			actions.perform()
 			actions.reset_actions()
+			self.quebra_linha(2)
 
 			for cont in conteudo['jogos']:
 				actions.send_keys(cont['jogo'])
-				actions.key_down(Keys.SHIFT)
-				actions.send_keys(Keys.ENTER)
-				actions.key_up(Keys.SHIFT)
-				actions.send_keys(cont['sigla_time_casa'] + ' ' + cont['placar_time_casa'] + ' X ' + cont['placar_time_fora'] + ' ' + cont['sigla_time_fora'])
-				actions.key_down(Keys.SHIFT)
-				actions.send_keys(Keys.ENTER)
-				actions.send_keys(Keys.ENTER)
-				actions.key_up(Keys.SHIFT)
 				actions.perform()
 				actions.reset_actions()
+				self.quebra_linha(1)
+				actions.send_keys(cont['sigla_time_casa'] + ' ' + cont['placar_time_casa'] + ' X ' + cont['placar_time_fora'] + ' ' + cont['sigla_time_fora'])
+				actions.perform()
+				actions.reset_actions()
+				self.quebra_linha(2)
 
 			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
 			botaoEnviar.click()
@@ -240,21 +218,15 @@ class Botzap:
 
 			mensagemBox.click()
 			actions.send_keys("*Últimas Notícias*")
-			actions.key_down(Keys.SHIFT)
-			actions.send_keys(Keys.ENTER)
-			actions.send_keys(Keys.ENTER)
-			actions.key_up(Keys.SHIFT)
 			actions.perform()
 			actions.reset_actions()
+			self.quebra_linha(2)
 			c = 1
 			for cont in conteudo['articles']:
 				actions.send_keys('Noticia {}: '.format(c) + cont['title'])
-				actions.key_down(Keys.SHIFT)
-				actions.send_keys(Keys.ENTER)
-				actions.send_keys(Keys.ENTER)
-				actions.key_up(Keys.SHIFT)
 				actions.perform()
 				actions.reset_actions()
+				self.quebra_linha(2)
 				c = int(c) + 1
 
 			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
@@ -267,19 +239,14 @@ class Botzap:
 
 			mensagemBox.click()
 			actions.send_keys("*Cotação Diária*")
-			actions.key_down(Keys.SHIFT)
-			actions.send_keys(Keys.ENTER)
-			actions.send_keys(Keys.ENTER)
-			actions.key_up(Keys.SHIFT)
 			actions.perform()
 			actions.reset_actions()
+			self.quebra_linha(2)
 			for cont in conteudo['moedas']:
 				actions.send_keys(cont['nome'] + ': ' + cont['valor'])
-				actions.key_down(Keys.SHIFT)
-				actions.send_keys(Keys.ENTER)
-				actions.key_up(Keys.SHIFT)
 				actions.perform()
 				actions.reset_actions()
+				self.quebra_linha(1)
 
 			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
 			botaoEnviar.click()
@@ -304,43 +271,71 @@ class Botzap:
 				botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
 				botaoEnviar.click()
 				
+				
+		elif(comando == 'ligaluz'):
+			chatid = self.driver.find_element_by_class_name('_3XrHh').find_element_by_class_name('_1wjpf').text
+			print("tentando validar usuario: " + chatid)
+			if self.valida_contato(chatid):
+				mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+				mensagemBox.click()
+				actions.send_keys("Luz Ligada!")
+				actions.perform()
+				actions.reset_actions()
+				botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+				botaoEnviar.click()
+			else:
+				mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+				mensagemBox.click()
+				actions.send_keys("Voce não tem acesso para esse comando!")
+				actions.perform()
+				actions.reset_actions()
+				botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+				botaoEnviar.click()
+				
 
 		elif(comando == 'comandos'):
 			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
 			mensagemBox.click()
 			actions.send_keys("*Lista Comandos*")
-			actions.key_down(Keys.SHIFT)
-			actions.send_keys(Keys.ENTER)
-			actions.send_keys(Keys.ENTER)
-			actions.key_up(Keys.SHIFT)
+			actions.perform()
+			actions.reset_actions()
+			self.quebra_linha(2)
 			actions.send_keys('/oibot = Para me chamar')
-			actions.key_down(Keys.SHIFT)
-			actions.send_keys(Keys.ENTER)
-			actions.key_up(Keys.SHIFT)
+			actions.perform()
+			actions.reset_actions()
+			self.quebra_linha(1)
 			actions.send_keys('/noticias = Para receber algumas noticias')
-			actions.key_down(Keys.SHIFT)
-			actions.send_keys(Keys.ENTER)
-			actions.key_up(Keys.SHIFT)
+			actions.perform()
+			actions.reset_actions()
+			self.quebra_linha(1)
 			actions.send_keys('/fofocas = Para receber as ultimas fofocas')
-			actions.key_down(Keys.SHIFT)
-			actions.send_keys(Keys.ENTER)
-			actions.key_up(Keys.SHIFT)
+			actions.perform()
+			actions.reset_actions()
+			self.quebra_linha(1)
 			actions.send_keys('/moedas = Para receber a cotação atual das principais moedas')
-			actions.key_down(Keys.SHIFT)
-			actions.send_keys(Keys.ENTER)
-			actions.key_up(Keys.SHIFT)
+			actions.perform()
+			actions.reset_actions()
+			self.quebra_linha(1)
 			actions.send_keys('/tabela = Para receber a tabela do Brasileirao Serie A')
-			actions.key_down(Keys.SHIFT)
-			actions.send_keys(Keys.ENTER)
-			actions.key_up(Keys.SHIFT)
+			actions.perform()
+			actions.reset_actions()
+			self.quebra_linha(1)
 			actions.send_keys('/jogos = Para receber os jogos da rodada atual do Brasileirao Serie A')
-			actions.key_down(Keys.SHIFT)
-			actions.send_keys(Keys.ENTER)
-			actions.key_up(Keys.SHIFT)
+			actions.perform()
+			actions.reset_actions()
+			self.quebra_linha(1)
 			actions.send_keys('/filmes = Para receber os filmes que estao em cartaz')
-			actions.key_down(Keys.SHIFT)
-			actions.send_keys(Keys.ENTER)
-			actions.key_up(Keys.SHIFT)
+			actions.perform()
+			actions.reset_actions()
+			self.quebra_linha(1)
+			actions.send_keys('/desliga_luz = Para desligar a luz do corredor')
+			actions.perform()
+			actions.reset_actions()
+			self.quebra_linha(1)
+			actions.send_keys('/liga_luz = Para ligar a luz do corredor')
+			actions.perform()
+			actions.reset_actions()
+			self.quebra_linha(1)
 			actions.send_keys('/comandos = Para receber uma lista de comandos')
 			actions.perform()
 			actions.reset_actions()

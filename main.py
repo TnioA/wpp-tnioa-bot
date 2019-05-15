@@ -42,6 +42,10 @@ while True:
 		elif retorno == '/desliga_luz':
 			print('recebido o comando desligar luz')
 			bot.sendMessage('desligaluz')
+			
+		elif retorno == '/liga_luz':
+			print('recebido o comando ligar luz')
+			bot.sendMessage('ligaluz')
 
 		elif retorno == '/comandos':
 			print('recebido o comando lista de comandos')
