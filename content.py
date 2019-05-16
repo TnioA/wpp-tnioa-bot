@@ -44,3 +44,10 @@ def getfofocas():
 	resp = requests.get(url)
 	conteudo = json.loads((resp.content).decode('utf-8'))
 	return(conteudo)
+	
+def getclima():
+    #API DE CLIMA
+    url = 'http://apiadvisor.climatempo.com.br/api/v1/weather/locale/8050/current?token=73f0bedea663ee573e6e310a4c5db1a5'
+    resp = requests.get(url)
+    conteudo = json.loads((resp.content).decode('utf-8'))
+    return(conteudo)

@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 import content
-import os, re, time, json
+import os, re, time, json, csv
 
 
 class Botzap:
@@ -12,12 +12,12 @@ class Botzap:
 		
 		print('Bot Iniciado')
 		#self.driver = webdriver.Edge(executable_path='driver/windows/MicrosoftWebDriver') # - se for microsoft edge
-		self.driver = webdriver.Chrome(executable_path='driver/rasp/chromedriver') # se for chrome
+		self.driver = webdriver.Chrome(executable_path='driver/windows/chromedriver') # se for chrome
 		#self.driver = webdriver.Firefox(executable_path='driver/mac/geckodriver') # se for firefox
 		
 		self.driver.get('https://web.whatsapp.com/source=&data=#')
 		actions = ActionChains(self.driver)
-		time.sleep(60)
+		time.sleep(5)
 		'''
 		try:
 			#----- MENSAGEM DE ATIVO----------#
@@ -111,21 +111,108 @@ class Botzap:
 	def sendMessage(self, comando):
 		actions = ActionChains(self.driver)
 		if(comando == 'ola'):
+		    mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+		    mensagemBox.click()
+		    actions.send_keys('Oi eu sou o bot do Tanio responda com /comandos para receber a lista de comandos e conseguir se comunicar comigo')
+		    actions.perform()
+		    actions.reset_actions()
+		    botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+		    botaoEnviar.click()
+			
+		elif(comando == 'erro'):
+			texto = 'Comando desconhecido digite /comandos para receber a lista dos comandos válidos!'
 			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
 			mensagemBox.click()
-			actions.send_keys('Oi eu sou o bot do Tanio responda com /comandos para receber a lista de comandos e conseguir se comunicar comigo')
+			actions.send_keys(texto)
 			actions.perform()
 			actions.reset_actions()
 			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
 			botaoEnviar.click()
 
+		elif(comando == 'relatorio'):
+		    mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+		    mensagemBox.click()
+		    actions.send_keys('*Comando ainda em manutenção*')
+		    actions.perform()
+		    actions.reset_actions()
+		    '''
+		    arquivo = open('C:/VIRTUAL AGE/novoarquivo/relatorio449.csv')
+		    linhas = csv.reader(arquivo, delimiter=';')
+		    mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+		    mensagemBox.click()
+		    actions.send_keys('*449 - RELATORIO DE CLIENTES ATENDIDOS*')
+		    actions.perform()
+		    actions.reset_actions()
+		    self.quebra_linha(2)
+		    actions.send_keys('         *Nome*         |         *Telefone*      ')
+		    actions.perform()
+		    actions.reset_actions()
+		    self.quebra_linha(1)
+		    for linha in linhas:
+		        mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+		        mensagemBox.click()
+		        actions.send_keys(linha[3] + ' - ' + linha[8])
+		        actions.perform()
+		        actions.reset_actions()
+		        self.quebra_linha(1)
+		    
+		    '''    
+		    botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+		    botaoEnviar.click()
+		    
+		elif(comando == 'clima'):
+		    mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+		    mensagemBox.click()
+		    conteudo = content.getclima()
+		  
+		    actions.send_keys('*Clima agora*')
+		    actions.perform()
+		    actions.reset_actions()
+		    self.quebra_linha(1)
+		    actions.send_keys('*' + conteudo['name'] + ' ' + conteudo['state'] + '*')
+		    actions.perform()
+		    actions.reset_actions()
+		    self.quebra_linha(1)
+		    actions.send_keys(conteudo['data']['condition'])
+		    actions.perform()
+		    actions.reset_actions()
+		    self.quebra_linha(2)
+		    actions.send_keys('Temperatura: ' + str(conteudo['data']['temperature']) + '°')
+		    actions.perform()
+		    actions.reset_actions()
+		    self.quebra_linha(1)
+		    actions.send_keys('Sensação: ' + str(conteudo['data']['sensation']) + '°')
+		    actions.perform()
+		    actions.reset_actions()
+		    self.quebra_linha(1)
+		    actions.send_keys('Umidade: ' + str(conteudo['data']['humidity']) + '°')
+		    actions.perform()
+		    actions.reset_actions()
+		    self.quebra_linha(1)
+		    actions.send_keys('Pressão: ' + str(conteudo['data']['pressure']) + 'hPa')
+		    actions.perform()
+		    actions.reset_actions()
+		    self.quebra_linha(1)
+		    actions.send_keys('Vento: ' + str(conteudo['data']['wind_velocity']) + 'Km/h')
+		    actions.perform()
+		    actions.reset_actions()
+		    self.quebra_linha(2)
+		    actions.send_keys('Atualização: ' + conteudo['data']['date'])
+		    actions.perform()
+		    actions.reset_actions()
+		    self.quebra_linha(1)
+		    
+		    
+		    botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+		    botaoEnviar.click()
+		
 		elif(comando == 'filmes'):
 			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
 			mensagemBox.click()
 			conteudo = content.getmovies()
 			
 			mensagemBox.click()
-			actions.send_keys("*Filmes em Cartaz*")
+			actions.send_keys('*Filmes em Cartaz*')
 			actions.perform()
 			actions.reset_actions()
 			self.quebra_linha(2)
@@ -149,7 +236,7 @@ class Botzap:
 			conteudo = content.getfofocas()
 			
 			mensagemBox.click()
-			actions.send_keys("*Ultimas Fofocas*")
+			actions.send_keys('*Ultimas Fofocas*')
 			actions.perform()
 			actions.reset_actions()
 			self.quebra_linha(2)
@@ -173,7 +260,7 @@ class Botzap:
 			conteudo = content.gettabela()
 
 			mensagemBox.click()
-			actions.send_keys("*Tabela Brasileirão*")
+			actions.send_keys('*Tabela Brasileirão*')
 			actions.perform()
 			actions.reset_actions()
 			self.quebra_linha(2)
@@ -217,7 +304,7 @@ class Botzap:
 			conteudo = content.getnews()
 
 			mensagemBox.click()
-			actions.send_keys("*Últimas Notícias*")
+			actions.send_keys('*Últimas Notícias*')
 			actions.perform()
 			actions.reset_actions()
 			self.quebra_linha(2)
@@ -238,7 +325,7 @@ class Botzap:
 			conteudo = content.getmoedas()
 
 			mensagemBox.click()
-			actions.send_keys("*Cotação Diária*")
+			actions.send_keys('*Cotação Diária*')
 			actions.perform()
 			actions.reset_actions()
 			self.quebra_linha(2)
@@ -253,11 +340,11 @@ class Botzap:
 			
 		elif(comando == 'desligaluz'):
 			chatid = self.driver.find_element_by_class_name('_3XrHh').find_element_by_class_name('_1wjpf').text
-			print("tentando validar usuario: " + chatid)
+			print('tentando validar usuario: ' + chatid)
 			if self.valida_contato(chatid):
 				mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
 				mensagemBox.click()
-				actions.send_keys("Luz Desligada!")
+				actions.send_keys('Luz Desligada!')
 				actions.perform()
 				actions.reset_actions()
 				botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
@@ -265,7 +352,7 @@ class Botzap:
 			else:
 				mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
 				mensagemBox.click()
-				actions.send_keys("Voce não tem acesso para esse comando!")
+				actions.send_keys('Voce não tem acesso para esse comando!')
 				actions.perform()
 				actions.reset_actions()
 				botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
@@ -274,7 +361,7 @@ class Botzap:
 				
 		elif(comando == 'ligaluz'):
 			chatid = self.driver.find_element_by_class_name('_3XrHh').find_element_by_class_name('_1wjpf').text
-			print("tentando validar usuario: " + chatid)
+			print('tentando validar usuario: ' + chatid)
 			if self.valida_contato(chatid):
 				mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
 				mensagemBox.click()
@@ -286,7 +373,7 @@ class Botzap:
 			else:
 				mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
 				mensagemBox.click()
-				actions.send_keys("Voce não tem acesso para esse comando!")
+				actions.send_keys('Voce não tem acesso para esse comando!')
 				actions.perform()
 				actions.reset_actions()
 				botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
@@ -296,11 +383,15 @@ class Botzap:
 		elif(comando == 'comandos'):
 			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
 			mensagemBox.click()
-			actions.send_keys("*Lista Comandos*")
+			actions.send_keys('*Lista Comandos*')
 			actions.perform()
 			actions.reset_actions()
 			self.quebra_linha(2)
 			actions.send_keys('/oibot = Para me chamar')
+			actions.perform()
+			actions.reset_actions()
+			self.quebra_linha(1)
+			actions.send_keys('/clima = Para receber as informações do clima agora')
 			actions.perform()
 			actions.reset_actions()
 			self.quebra_linha(1)
@@ -372,6 +463,6 @@ class Botzap:
 
 				except:
 					print('recebido mensagem sem texto')
-					return data		
+					return data
 		except:
 			return data
