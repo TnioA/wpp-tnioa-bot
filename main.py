@@ -3,7 +3,7 @@ import os, re, time, json
 from app import Botzap
 
 
-bot = Botzap('TanTanio_bot') #nome/numero do usuario pra mandar mensagem de ativo
+bot = Botzap('Tanio') #nome/numero do usuario pra mandar mensagem de ativo
 
 while True:
     conteudo = bot.message_loop()

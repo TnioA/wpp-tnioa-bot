@@ -8,7 +8,7 @@ import os, re, time, json, csv
 
 class Botzap:
 
-	def __init__(self, nome):
+	def __init__(self,nome):
 		
 		print('Bot Iniciado')
 		#self.driver = webdriver.Edge(executable_path='driver/windows/MicrosoftWebDriver') # - se for microsoft edge
@@ -17,36 +17,38 @@ class Botzap:
 		
 		self.driver.get('https://web.whatsapp.com/source=&data=#')
 		actions = ActionChains(self.driver)
-		time.sleep(5)
-		'''
-		try:
-			#----- MENSAGEM DE ATIVO----------#
-			pesquisaBox = self.driver.find_element_by_class_name('jN-F5')
-			pesquisaBox.send_keys(nome)
-			time.sleep(2)
-			contato = self.driver.find_element_by_xpath('//span[@title = "{}"]'.format(nome))
-			contato.click()
-			time.sleep(1)
+		time.sleep(10)
 
-			#PRIMEIRA MENSAGEM
-			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
-			mensagemBox.click()
-			actions.send_keys('Estou ativo:')
-			actions.key_down(Keys.SHIFT)
-			actions.send_keys(Keys.ENTER)
-			actions.key_up(Keys.SHIFT)
-			actions.send_keys("Ativo desde agora")
-			actions.perform()
-			actions.reset_actions()
-			time.sleep(1)
-			enviar = self.driver.find_element_by_class_name('_35EW6')
-			enviar.click()
-			time.sleep(1)
+		#try:
+		print(nome)
+		print("Enviando mensagem de boas vindas!")
+		#----- MENSAGEM DE ATIVO----------#
+		pesquisaBox = self.driver.find_element_by_class_name('_2zCfw')
+		pesquisaBox.send_keys(nome)
+		time.sleep(2)
+		contato = self.driver.find_element_by_xpath('//span[@title = "{}"]'.format(nome))
+		contato.click()
+		time.sleep(1)
 
-		except Exception as e:
-			print("Nao foi possivel ler o QR-Code!")
+		#PRIMEIRA MENSAGEM
+		mensagemBox = self.driver.find_element_by_class_name('_3u328')
+		mensagemBox.click()
+		actions.send_keys('Estou ativo:')
+		actions.key_down(Keys.SHIFT)
+		actions.send_keys(Keys.ENTER)
+		actions.key_up(Keys.SHIFT)
+		actions.send_keys("Ativo desde agora")
+		actions.perform()
+		actions.reset_actions()
+		time.sleep(1)
+		enviar = self.driver.find_element_by_class_name('_3M-N-')
+		enviar.click()
+		time.sleep(1)
 
-		'''
+		#except Exception as e:
+			#print("Nao foi possivel ler o QR-Code!")
+
+		
 
 	def quebra_linha(self, times):
 		actions = ActionChains(self.driver)
@@ -73,7 +75,7 @@ class Botzap:
 			return(True)
 		else:
 			print('contato nao liberado!')
-			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox = self.driver.find_element_by_class_name('_3u328')
 			mensagemBox.click()
 			actions.send_keys('*Acesso Negado!*')
 			actions.perform()
@@ -82,7 +84,7 @@ class Botzap:
 			actions.send_keys('Comando liberado apenas para o Administrador, entre com a senha de administrador para usá-lo:')
 			actions.perform()
 			actions.reset_actions()
-			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+			botaoEnviar = self.driver.find_element_by_class_name('_3M-N-')
 			botaoEnviar.click()
 
 			#------- aguardando a senha...
@@ -99,7 +101,7 @@ class Botzap:
 						actions.send_keys('Contato liberado com sucesso!')
 						actions.perform()
 						actions.reset_actions()
-						botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+						botaoEnviar = self.driver.find_element_by_class_name('_3M-N-')
 						botaoEnviar.click()
 						return(True)
 				except:
@@ -111,26 +113,26 @@ class Botzap:
 	def sendMessage(self, comando):
 		actions = ActionChains(self.driver)
 		if(comando == 'ola'):
-		    mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+		    mensagemBox = self.driver.find_element_by_class_name('_3u328')
 		    mensagemBox.click()
 		    actions.send_keys('Oi eu sou o bot do Tanio responda com /comandos para receber a lista de comandos e conseguir se comunicar comigo')
 		    actions.perform()
 		    actions.reset_actions()
-		    botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+		    botaoEnviar = self.driver.find_element_by_class_name('_3M-N-')
 		    botaoEnviar.click()
 			
 		elif(comando == 'erro'):
 			texto = 'Comando desconhecido digite /comandos para receber a lista dos comandos válidos!'
-			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox = self.driver.find_element_by_class_name('_3u328')
 			mensagemBox.click()
 			actions.send_keys(texto)
 			actions.perform()
 			actions.reset_actions()
-			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+			botaoEnviar = self.driver.find_element_by_class_name('_3M-N-')
 			botaoEnviar.click()
 
 		elif(comando == 'relatorio'):
-		    mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+		    mensagemBox = self.driver.find_element_by_class_name('_3u328')
 		    mensagemBox.click()
 		    actions.send_keys('*Comando ainda em manutenção*')
 		    actions.perform()
@@ -157,11 +159,11 @@ class Botzap:
 		        self.quebra_linha(1)
 		    
 		    '''    
-		    botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+		    botaoEnviar = self.driver.find_element_by_class_name('_3M-N-')
 		    botaoEnviar.click()
 		    
 		elif(comando == 'clima'):
-		    mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+		    mensagemBox = self.driver.find_element_by_class_name('_3u328')
 		    mensagemBox.click()
 		    conteudo = content.getclima()
 		  
@@ -203,11 +205,11 @@ class Botzap:
 		    self.quebra_linha(1)
 		    
 		    
-		    botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+		    botaoEnviar = self.driver.find_element_by_class_name('_3M-N-')
 		    botaoEnviar.click()
 		
 		elif(comando == 'filmes'):
-			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox = self.driver.find_element_by_class_name('_3u328')
 			mensagemBox.click()
 			conteudo = content.getmovies()
 			
@@ -227,11 +229,11 @@ class Botzap:
 				actions.reset_actions()
 				self.quebra_linha(2)
 
-			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+			botaoEnviar = self.driver.find_element_by_class_name('_3M-N-')
 			botaoEnviar.click()
 
 		elif(comando == 'fofocas'):
-			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox = self.driver.find_element_by_class_name('_3u328')
 			mensagemBox.click()
 			conteudo = content.getfofocas()
 			
@@ -251,11 +253,11 @@ class Botzap:
 				actions.reset_actions()
 				self.quebra_linha(2)
 
-			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+			botaoEnviar = self.driver.find_element_by_class_name('_3M-N-')
 			botaoEnviar.click()
 
 		elif(comando == 'tabela'):
-			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox = self.driver.find_element_by_class_name('_3u328')
 			mensagemBox.click()
 			conteudo = content.gettabela()
 
@@ -271,11 +273,11 @@ class Botzap:
 				actions.reset_actions()
 				self.quebra_linha(1)
 
-			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+			botaoEnviar = self.driver.find_element_by_class_name('_3M-N-')
 			botaoEnviar.click()
 
 		elif(comando == 'jogos'):
-			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox = self.driver.find_element_by_class_name('_3u328')
 			mensagemBox.click()
 			conteudo = content.getjogos()
 
@@ -295,11 +297,11 @@ class Botzap:
 				actions.reset_actions()
 				self.quebra_linha(2)
 
-			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+			botaoEnviar = self.driver.find_element_by_class_name('_3M-N-')
 			botaoEnviar.click()
 
 		elif(comando == 'noticias'):
-			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox = self.driver.find_element_by_class_name('_3u328')
 			mensagemBox.click()
 			conteudo = content.getnews()
 
@@ -316,11 +318,11 @@ class Botzap:
 				self.quebra_linha(2)
 				c = int(c) + 1
 
-			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+			botaoEnviar = self.driver.find_element_by_class_name('_3M-N-')
 			botaoEnviar.click()
 
 		elif(comando == 'moedas'):
-			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox = self.driver.find_element_by_class_name('_3u328')
 			mensagemBox.click()
 			conteudo = content.getmoedas()
 
@@ -335,27 +337,27 @@ class Botzap:
 				actions.reset_actions()
 				self.quebra_linha(1)
 
-			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+			botaoEnviar = self.driver.find_element_by_class_name('_3M-N-')
 			botaoEnviar.click()
 			
 		elif(comando == 'desligaluz'):
 			chatid = self.driver.find_element_by_class_name('_3XrHh').find_element_by_class_name('_1wjpf').text
 			print('tentando validar usuario: ' + chatid)
 			if self.valida_contato(chatid):
-				mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+				mensagemBox = self.driver.find_element_by_class_name('_3u328')
 				mensagemBox.click()
 				actions.send_keys('Luz Desligada!')
 				actions.perform()
 				actions.reset_actions()
-				botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+				botaoEnviar = self.driver.find_element_by_class_name('_3M-N-')
 				botaoEnviar.click()
 			else:
-				mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+				mensagemBox = self.driver.find_element_by_class_name('_3u328')
 				mensagemBox.click()
 				actions.send_keys('Voce não tem acesso para esse comando!')
 				actions.perform()
 				actions.reset_actions()
-				botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+				botaoEnviar = self.driver.find_element_by_class_name('_3M-N-')
 				botaoEnviar.click()
 				
 				
@@ -363,25 +365,25 @@ class Botzap:
 			chatid = self.driver.find_element_by_class_name('_3XrHh').find_element_by_class_name('_1wjpf').text
 			print('tentando validar usuario: ' + chatid)
 			if self.valida_contato(chatid):
-				mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+				mensagemBox = self.driver.find_element_by_class_name('_3u328')
 				mensagemBox.click()
 				actions.send_keys("Luz Ligada!")
 				actions.perform()
 				actions.reset_actions()
-				botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+				botaoEnviar = self.driver.find_element_by_class_name('_3M-N-')
 				botaoEnviar.click()
 			else:
-				mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+				mensagemBox = self.driver.find_element_by_class_name('_3u328')
 				mensagemBox.click()
 				actions.send_keys('Voce não tem acesso para esse comando!')
 				actions.perform()
 				actions.reset_actions()
-				botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+				botaoEnviar = self.driver.find_element_by_class_name('_3M-N-')
 				botaoEnviar.click()
 				
 
 		elif(comando == 'comandos'):
-			mensagemBox = self.driver.find_element_by_class_name('_2S1VP')
+			mensagemBox = self.driver.find_element_by_class_name('_3u328')
 			mensagemBox.click()
 			actions.send_keys('*Lista Comandos*')
 			actions.perform()
@@ -430,7 +432,7 @@ class Botzap:
 			actions.send_keys('/comandos = Para receber uma lista de comandos')
 			actions.perform()
 			actions.reset_actions()
-			botaoEnviar = self.driver.find_element_by_class_name('_35EW6')
+			botaoEnviar = self.driver.find_element_by_class_name('_3M-N-')
 			botaoEnviar.click()
 
 
@@ -438,27 +440,29 @@ class Botzap:
 		data = {'chatid': '', 'text': '', 'time': ''}
 		contactBox = self.driver.find_elements_by_class_name('_2wP_Y')
 		try:
-			if(self.driver.find_element_by_class_name('_298R6')):
-				droppage = self.driver.find_element_by_class_name('_298R6')
+			if(self.driver.find_element_by_class_name('_3KRbU')):
+				droppage = self.driver.find_element_by_class_name('_3KRbU')
 				droppage.click()
 		except:
 			pass
 		try:
-			if(self.driver.find_element_by_class_name('OUeyt')):
-				escolha_contato = self.driver.find_element_by_class_name('OUeyt')
+			if(self.driver.find_element_by_class_name('P6z4j')):
+				escolha_contato = self.driver.find_element_by_class_name('P6z4j')
 				escolha_contato.click()
 				time.sleep(1)
-				chatid = self.driver.find_element_by_class_name('_3XrHh').find_element_by_class_name('_1wjpf').text
+				chatid = self.driver.find_element_by_class_name('_19RFN').text
 				
-				post = self.driver.find_elements_by_class_name('_3_7SH')
+				post = self.driver.find_elements_by_class_name('_1ays2')
 				ultimo_post = len(post) - 1
+				print(post[ultimo_post].find_element_by_class_name('_F7Vk').find_element_by_tag_name('span').text)
 				try:
 					time.sleep(1)
-					hora = post[ultimo_post].find_element_by_class_name('_3EFt_').text
-					texto = post[ultimo_post].find_element_by_class_name('selectable-text').text
+					hora = post[ultimo_post].find_element_by_class_name('_3fnHB').text
+					texto = post[ultimo_post].find_element_by_class_name('_F7Vk').find_element_by_tag_name('span').text
 					data = {'chatid': str(chatid),
 						    'text': str(texto),
 						    'time': str(hora)}
+				
 					return data
 
 				except:
