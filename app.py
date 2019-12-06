@@ -437,36 +437,44 @@ class Botzap:
 
 
 	def message_loop(self):
+		#objeto com os dados da mensagem
 		data = {'chatid': '', 'text': '', 'time': ''}
-		contactBox = self.driver.find_elements_by_class_name('_2wP_Y')
+
+		#rolador de pagina sempre pra baixo
 		try:
 			if(self.driver.find_element_by_class_name('_3KRbU')):
 				droppage = self.driver.find_element_by_class_name('_3KRbU')
 				droppage.click()
 		except:
 			pass
+		
+		#verificar se possui uma nova mensagem
 		try:
 			if(self.driver.find_element_by_class_name('P6z4j')):
 				escolha_contato = self.driver.find_element_by_class_name('P6z4j')
 				escolha_contato.click()
+				escolha_contato.click()
 				time.sleep(1)
+				#obtem o nome do contato
 				chatid = self.driver.find_element_by_class_name('_19RFN').text
-				
-				post = self.driver.find_elements_by_class_name('_1ays2')
+				#obtem a conversa
+				post = self.driver.find_elements_by_class_name('FTBzM')
+				#obtem o indice da ultima conversa
 				ultimo_post = len(post) - 1
-				print(post[ultimo_post].find_element_by_class_name('_F7Vk').find_element_by_tag_name('span').text)
+				ultimaMensagem = post[ultimo_post]
 				try:
 					time.sleep(1)
-					hora = post[ultimo_post].find_element_by_class_name('_3fnHB').text
-					texto = post[ultimo_post].find_element_by_class_name('_F7Vk').find_element_by_tag_name('span').text
+					hora = ultimaMensagem.find_element_by_class_name('_3fnHB').text
+					texto = ultimaMensagem.find_element_by_class_name('_F7Vk').find_element_by_tag_name('span').text
 					data = {'chatid': str(chatid),
 						    'text': str(texto),
 						    'time': str(hora)}
-				
+					print(data)
 					return data
 
 				except:
 					print('recebido mensagem sem texto')
+					print(data)
 					return data
 		except:
 			return data
